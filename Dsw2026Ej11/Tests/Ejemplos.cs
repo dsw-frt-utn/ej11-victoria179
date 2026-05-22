@@ -76,7 +76,7 @@ internal class Ejemplos
     public static void EjemploLinq()
     {
         var listaLibros = Libro.CrearLista();
-        var casoLinq = new CasoLinq(listaLibros);
+        var casoLinq = new CasoLinq();
 
         Console.WriteLine("===1.Primer Libro===");
         Libro? primero = casoLinq.GetPrimero();
