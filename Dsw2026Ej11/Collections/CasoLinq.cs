@@ -1,7 +1,7 @@
 ﻿namespace Dsw2026Ej11.Collections;
 
 using Dsw2026Ej11.Domain;
-using System.Linq;
+using System.Collections;
 
 /*
  * Para cada punto crear un método que permita:
@@ -19,63 +19,19 @@ using System.Linq;
  */
 public class CasoLinq
 {
-    private List<Libro> libros;
-    public CasoLinq(List<Libro> listaLibros)
-    {
-        libros = listaLibros;
-    }
-    public Libro? GetPrimero()
-    {
-        return libros.FirstOrDefault();
-    }
-    public Libro? GetUltimo()
-    {
-        return libros.LastOrDefault();
-    }
-    public decimal GetTotalPrecios()
-    {
-        return libros.Sum(libro => libro.Precio);
-    }
-    public decimal GetPromedioPrecios()
-    {
-        return libros.Average(libro => libro.Precio);
-    }
-    public List<Libro> GetListById()
-    {
-        return libros
-                .Where(libro => libro.Id > 15)
-                .ToList();
-    }
-    public List<string> GetLibros()
-    {
-        return libros
-               .Select(libro => $"{libro.Titulo}-{libro.Precio:c}")
-               .ToList();
-    }
-    public Libro? GetMayorPrecio()
-    {
-        return libros
-               .OrderByDescending(libro => libro.Precio)
-               .FirstOrDefault();
-    }
-    public Libro? GetMenorPrecio()
-    {
-        return libros
-               .OrderBy(libro => libro.Precio)
-               .FirstOrDefault();
-    }
-    public List<Libro> GetMayorPromedio()
-    {
-        decimal promedio = libros.Average(libro => libro.Precio);
-        return libros
-               .Where(libro => libro.Precio > promedio)
-               .ToList();
-              
-    }
-    public List<Libro> GetOrdenadosPorTitulo()
-    {
-        return libros
-            .OrderByDescending(libro => libro.Titulo)
-            .ToList();
-    } 
+
+
+    private List<Libro> _libros = Libro.CrearLista();
+
+    public Libro? GetPrimero() => _libros.First();
+    public Libro? GetUltimo() => _libros.Last();
+    public decimal GetTotalPrecios() => _libros.Sum(l => l.Precio);
+    public decimal GetPromedioPrecios() =>_libros.Average(l => l.Precio);
+    public IEnumerable<Libro> GetListById() => _libros.Where(l => l.Id > 15);
+    public IEnumerable<string> GetLibros() => _libros.Select(l => $"{l.Titulo}-{l.Precio:c}");
+    public Libro? GetMayorPrecio() => _libros.OrderByDescending(libro => libro.Precio).FirstOrDefault();
+    public Libro? GetMenorPrecio() => _libros.OrderBy(libro => libro.Precio).FirstOrDefault();
+    public IEnumerable<Libro> GetMayorPromedio() => _libros.Where(l => l.Precio > _libros.Average(x => x.Precio));
+    public IEnumerable<Libro> GetOrdenadosPorTitulo() => _libros.OrderByDescending(l => l.Titulo);
+
 }
